@@ -228,7 +228,7 @@ A `SOL` entry should now appear under `[ molecules ]` with the number of added w
 
 ## 6. Adding Ions
 
-### 6.1 Determine the System Charge
+### 6.1 Determine the System Charge - [COME BACK AND CHECK THIS]
 
 Check the total charge of each chain by looking at the last `qtot` value before the `[ bonds ]` section:
 
@@ -298,19 +298,13 @@ Two key indicators of successful energy minimisation:
 printf "Potential\n0\n" | gmx energy -f em.edr -o potential.xvg
 ```
 
-Plot with Xmgrace (if available):
+Plot with Xmgrace (if available):  **[DOESNT WORK ON APOCRITA COME BACK AND CHECK THIS / FIND ALTERNATIVE]**
 
 ```bash
 xmgrace potential.xvg
 ```
 
 The plot should show steady convergence of the potential energy.
-
-> **Using pre-computed data:** If you don't want to wait, copy from the reference directory:
-> ```bash
-> cp reference/em_charmm.edr em.edr
-> cp reference/em_charmm.gro em.gro
-> ```
 
 ---
 
@@ -348,12 +342,6 @@ xmgrace temperature.xvg
 
 The temperature should quickly reach 300 K and remain stable.
 
-> **Using pre-computed data:**
-> ```bash
-> cp reference/nvt_charmm.edr nvt.edr
-> cp reference/nvt_charmm.gro nvt.gro
-> cp reference/nvt_charmm.cpt nvt.cpt
-> ```
 
 ### 8.2 NPT Equilibration (Pressure)
 
@@ -388,12 +376,7 @@ xmgrace density.xvg
 
 Pressure will fluctuate widely (RMSE ~100 bar is normal) — what matters is that the *average* is close to the target (1 bar). The density should be close to ~1000 kg/m^3.
 
-> **Using pre-computed data:**
-> ```bash
-> cp reference/npt_charmm.edr npt.edr
-> cp reference/npt_charmm.gro npt.gro
-> cp reference/npt_charmm.cpt npt.cpt
-> ```
+
 
 ---
 
@@ -460,13 +443,6 @@ Monitor the job:
 squeue -u $USER
 ```
 
-> **Using pre-computed data:**
-> ```bash
-> cp reference/md_charmm.log md.log
-> cp reference/md_charmm.edr md.edr
-> cp reference/md_charmm.gro md.gro
-> cp reference/md_charmm.xtc md.xtc
-> ```
 
 ---
 
