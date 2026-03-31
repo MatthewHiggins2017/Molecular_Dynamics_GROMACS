@@ -1,21 +1,23 @@
 # GROMACS
 -----------------
 
-# Why use Molecular Dynamics? 
+**Tutorials:** 
 
-A way to see how particles move within a fixed system. For example to understand protein dynamics, etc. 
+1. GROMACs MD Introduction Tutorial Adapted for Apocrita - (Derived from https://tutorials.gromacs.org/md-intro-tutorial.html) 
 
-# Basic of Molecular Dynamics? 
+2. UvsX MD Tutorial with video visualisation adapted for Apocrita. 
 
-Running any molecular dyanamic simulation typically follows three steps 
+**Supporting Information:** 
 
-1) Create an initial state of the system., 
-2) Introduce interaction potentials of particles within the system 
-3) Predict have particles move.  
+1. Understanding GROMACS Theory 
+2. GROMACS Key Defintions. 
+3. Understanding GROMACS Key Files 
+4. GROMACS Common Pitfalls and Mastery.
+3. Bonus - Understanding Protein Files. 
 
 
 
-
+-----------------
 # Relevant Literature
 
 * https://doi.org/10.1016/0010-4655(95)00042-E
