@@ -40,8 +40,7 @@ module load nano miniforge gromacs
 git clone https://github.com/MatthewHiggins2017/Molecular_Dynamics_GROMACS.git
 
 # Extract and enter directory
-unzip md-intro-tutorial-main.zip
-cd md-intro-tutorial-main
+cd Molecular_Dynamics_GROMACS
 ```
 
 ### 1.4 Create and Activate the Conda Environment
@@ -49,8 +48,8 @@ cd md-intro-tutorial-main
 Here we are using the version without gmx as have GROMACS installed as a module anyway. 
 
 ```bash
-conda env create --name GROMACS-md-intro-tutorial --file environment_withoutgmx.yml
-conda activate GROMACS-md-intro-tutorial
+conda env create --name GROMACS-tutorial --file environment.yml
+conda activate GROMACS-tutorial
 ```
 
 ### 1.5 Move into the Data Directory
@@ -62,7 +61,7 @@ cd data
 ls
 ```
 
----
+-----------
 
 ## 2. Obtaining and Cleaning the Input Structure
 
@@ -188,6 +187,20 @@ grep "atoms" -A 7 topol_Protein_chain_A.itp
 
 ### 4.4 Inspect Bonded Interactions
 
+The meaning of the atom parameters are listed in the following table:
+
+|Parameter  |  Description |
+|--|--
+|nr|Atom number in simulation system
+|type| Atom type
+|resnr| Residue number. May refer to either an amino acid within a protein or a small molecule (e.g. water)
+|residue| Name of the residue (e.g. amino acid name) 
+|atom| Atom name
+|cgnr| Charge group number (this is no longer used in simulations)
+|charge| Atom charge (<i>e</i>)
+|mass| Atom mass (<i>u</i>)
+|typeB, chargeB, massB| Type, charge, and mass of second (state B) atom. Used for free energy perturbations (not discussed here).
+
 ```bash
 # Bonds
 grep "bonds" -A 7 topol_Protein_chain_A.itp
@@ -281,17 +294,29 @@ A `SOL` entry should now appear under `[ molecules ]` with the number of added w
 
 > **Note:** `gmx solvate` *adds* water entries to the topology — it does not overwrite. Running it multiple times will cause a mismatch.
 
----
+#### 5.3 Visualising Non-Cubic Boxes (Ignore if using Cubic Simulation Box)
+
+Since GROMACS represents all box shapes in a triclinic system, we first need to transform shapes, such as the truncated octahedron or rhombic dodecahedron, to be able to visualize them correctly. If you use cubic or rectangular boxes, you can skip the three commands below.
+
+Here, we will use `gmx trjconv` with the `-pbc mol` and `-us compact` options to put all molecules back into the box shape. For this, we need a `.tpr` file, so we will run `gmx grompp` just to create this file. We will also create an empty `.mdp` file (using the bash touch command) since it's required by `gmx grompp`. We will go through these commands later in the tutorial, so don't worry about them now! **Note that we will only use the resulting `1fjs_solv_viz.gro` file for visualization and not for preparing the rest of the simulation!**
+
+```bash
+touch viz.mdp
+gmx grompp -f viz.mdp -c 1fjs_solv.gro -p topol.top -o topol.tpr
+printf "0\n" | gmx trjconv -f 1fjs_solv.gro -s topol.tpr -o 1fjs_solv_viz.gro -pbc mol -ur compact
+```
+
+--------
 
 ## 6. Adding Ions
 
-### 6.1 Determine the System Charge - [COME BACK AND CHECK THIS]
+### 6.1 Determine the System Charge
 
 Check the total charge of each chain by looking at the last `qtot` value before the `[ bonds ]` section:
 
 ```bash
-grep "bonds" -B 20 topol_Protein_chain_A.itp | tail -25
-grep "bonds" -B 20 topol_Protein_chain_L.itp | tail -25
+grep "bonds" -B 17 topol_Protein_chain_A.itp 
+grep "bonds" -B 17 topol_Protein_chain_L.itp 
 ```
 
 The protein has a net charge of -2e (qtot_A = 1, qtot_L = -3).
@@ -308,8 +333,7 @@ gmx grompp -f ions.mdp -c 1fjs_solv.gro -p topol.top -o ions.tpr
 ### 6.3 Add Ions
 
 ```bash
-printf "SOL\n" | gmx genion -s ions.tpr -o 1fjs_solv_ions.gro -conc 0.15 \
-  -p topol.top -pname NA -nname CL -neutral
+printf "SOL\n" | gmx genion -s ions.tpr -o 1fjs_solv_ions.gro -conc 0.15 -p topol.top -pname NA -nname CL -neutral
 ```
 
 We select the `SOL` group for ion placement (we never want to replace protein atoms with ions). The `-neutral` flag ensures the system is charge-neutral, and `-conc 0.15` sets the NaCl concentration to 0.15 M.
@@ -323,6 +347,14 @@ tail -6 topol.top
 ```
 
 You should see two more NA than CL ions (to compensate the -2e charge).
+
+### 6.4 Visualising Non-Cubic Boxes.
+
+```bash
+gmx grompp -f viz.mdp -c 1fjs_solv_ions.gro -p topol.top -o topol.tpr
+printf "0\n" | gmx trjconv -f 1fjs_solv_ions.gro -s topol.tpr -o 1fjs_solv_ions_viz.gro -pbc mol -ur compact
+```
+
 
 ---
 
