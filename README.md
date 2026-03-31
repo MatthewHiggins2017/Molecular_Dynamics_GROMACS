@@ -1,11 +1,11 @@
-# GROMACS
+#GROMACS
 -----------------
 
 **Tutorials:** 
 
 1. GROMACs MD Introduction Tutorial Adapted for Apocrita - (Derived from https://tutorials.gromacs.org/md-intro-tutorial.html) 
 
-2. UvsX MD Tutorial with video visualisation adapted for Apocrita. 
+2. UvsX MD Tutorial with video visualisation adapted for Apocrita.  - Recreating published analysis! 
 
 **Supporting Information:** 
 
