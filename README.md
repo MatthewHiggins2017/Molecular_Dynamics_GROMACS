@@ -9,11 +9,11 @@
 
 **Supporting Information:** 
 
-1. Understanding GROMACS Theory 
-2. GROMACS Key Defintions. 
-3. Understanding GROMACS Key Files 
-4. GROMACS Common Pitfalls and Mastery.
-3. Bonus - Understanding Protein Files. 
+1. [Understanding GROMACS Theory](./Supporting_Information/01_Understanding_GROMACS_Theory.md)
+2. [GROMACS Key Definitions](./Supporting_Information/02_GROMACS_Key_Definitions.md)
+3. [Understanding GROMACS Key Files](./Supporting_Information/03_Understanding_GROMACS_Key_Files.md)
+4. [GROMACS Common Pitfalls and Mastery](./Supporting_Information/04_GROMACS_Common_Pitfalls_and_Mastery.md)
+5. [Bonus - Understanding Protein Files](./Supporting_Information/05_Bonus_Understanding_Protein_Files.md)
 
 
 
